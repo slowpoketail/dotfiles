@@ -1,0 +1,7 @@
+# ignore everything in the root directory
+/*
+# allow .gitignore
+!.gitignore
+
+# whitelist neovim config
+!/nvim/

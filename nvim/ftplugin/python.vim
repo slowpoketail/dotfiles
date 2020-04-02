@@ -1,0 +1,2 @@
+set fo=croqalj1
+
