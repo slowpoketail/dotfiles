@@ -9,3 +9,7 @@
 # whitelist i3 & i3status
 !/i3/
 !/i3status/
+
+# zsh
+# XXX: set ZDOTDIR, preferably somewhere global (such as /etc/zsh/zshenv), otherwise everything will break
+!/zsh/

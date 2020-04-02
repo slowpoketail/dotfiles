@@ -1,0 +1,63 @@
+source $ZDOTDIR/symbols
+
+function prompt_slowpoke_setup () {
+    setopt LOCAL_OPTIONS
+    unsetopt XTRACE
+
+    # set default line color
+    [[ -z ${PROMPT_LINE_COLOR+x} ]] && export PROMPT_LINE_COLOR="blue"
+
+    PROMPT='$(build_prompt)'
+}
+
+function prompt_segment () {
+    echo -n "%{%F{$PROMPT_LINE_COLOR}%} ╾╼ %{%f%}"
+    prompt_segment_first $*
+}
+
+# the first promp segment must not start with a seperator
+function prompt_segment_first () {
+    local fg
+    [[ -n $1 ]] && fg="%F{$1}" || fg="%f"
+    echo -n "%{$fg%}"
+    [[ -n $2 ]] && echo -n "$2"
+}
+
+function prompt_begin_first_line () {
+    echo -n "%{%f%b%k%F{$PROMPT_LINE_COLOR}%}┌╼ %{%f%}"
+}
+
+function prompt_end_first_line () {
+    echo -n "%{%f%b%k%}"
+    echo "%(?ツツ %{%f%}%F{red}→ %?%f [$(errno $1)])"
+}
+
+function prompt_second_line () {
+    echo -n "%{%f%b%k%F{$PROMPT_LINE_COLOR}%}└╼ %{%f%}"
+}
+
+function build_prompt () {
+    LAST_RETURN_CODE=$?
+    prompt_begin_first_line
+
+    # hostname
+    # 12 == light blue
+    prompt_segment_first 12 "%m"
+    # vcs_info
+    [[ -n "${vcs_info_msg_0_}" ]] && prompt_segment cyan "${vcs_info_msg_0_}"
+    # virtualenv (python)
+    [[ -n ${VIRTUAL_ENV+x} ]] && prompt_segment green "${ASCLEPIUS}:${VIRTUAL_ENV##*/}"
+    # virtualenv (lua)
+    [[ -n ${VERT+x} ]] && prompt_segment green "${CRESCENT_MOON}:${VERT##*/}"
+
+    # finally, the working directory
+    prompt_segment white "%~"
+
+    prompt_end_first_line ${LAST_RETURN_CODE}
+
+    prompt_second_line
+}
+
+prompt_slowpoke_setup "$@"
+
+# vim: set filetype=zsh:
