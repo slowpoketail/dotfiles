@@ -1,0 +1,66 @@
+# i3status configuration file.
+# see "man i3status" for documentation.
+
+# It is important that this file is edited as UTF-8.
+# The following line should contain a sharp s:
+# ß
+# If the above line is not correctly displayed, fix your editor first!
+
+general {
+    colors = true
+    color_good = "#4c7899"
+    interval = 5
+}
+
+order += "ipv6"
+order += "wireless wlan0"
+order += "ethernet eth0"
+order += "volume master"
+order += "battery 0"
+order += "cpu_usage"
+order += "cpu_temperature 0"
+order += "cpu_temperature 1"
+order += "ddate"
+order += "tztime local"
+
+wireless wlan0 {
+    format_up = "W: (%quality at %essid) %ip"
+    format_down = "W: down"
+}
+
+ethernet eth0 {
+    format_up = "E: %ip (%speed)"
+    format_down = "E: down"
+}
+
+volume master {
+    format = "♪: %volume"
+    device = "default"
+    mixer = "Master"
+    mixer_idx = 0
+}
+
+battery 0 {
+    #last_full_capacity = true
+    format = "%status %percentage %remaining %consumption"
+}
+
+cpu_usage {
+    format = "%usage"
+}
+
+cpu_temperature 0 {
+    format = "1: %degrees °C"
+}
+
+cpu_temperature 1 {
+    format = "2: %degrees °C"
+}
+
+ddate {
+    format = "%{%A, %b %d%}, %Y%N - Celebrate %H!"
+}
+
+tztime local {
+    format = "%Y-%m-%d (%a) %H:%M:%S"
+}

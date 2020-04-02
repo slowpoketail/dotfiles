@@ -5,3 +5,7 @@
 
 # whitelist neovim config
 !/nvim/
+
+# whitelist i3 & i3status
+!/i3/
+!/i3status/
