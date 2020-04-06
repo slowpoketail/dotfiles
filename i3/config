@@ -163,6 +163,7 @@ bindsym $mod+r mode "resize"
 bar {
         output LVDS-1
         output DP-2
+	output DisplayPort-0
 
         status_command i3status
         mode hide
